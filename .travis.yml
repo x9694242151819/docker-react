@@ -2,10 +2,12 @@ sudo: required  # need superuser access
 services:
   - docker
 
-before_install:  # the -t flag tags the image with the name of the Github repo
+before_install:  
+  # the -t flag tags the image with the name of the Github repo
   - docker build -t x9694242151819/docker-react -f Dockerfile.dev .
 
-script:  # if a non-zero error code is received, docker assumes the build failed
+script:  
+  # if a non-zero error code is received, docker assumes the build failed
   # ISSUE with test: npm run test just runs a process that never exits, just waits for user to choose p,t,q, or enter
   # so, the test suite complestes as soon as the first test suite has completed.
   - docker run x9694242151819/docker-react npm run test -- --coverage
