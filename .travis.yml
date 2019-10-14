@@ -11,3 +11,29 @@ script:
   # ISSUE with test: npm run test just runs a process that never exits, just waits for user to choose p,t,q, or enter
   # so, the test suite complestes as soon as the first test suite has completed.
   - docker run x9694242151819/docker-react npm run test -- --coverage
+
+deploy:
+  # instructions on how to update AWS once tests have been run successfully
+  provider: elasticbeanstalk
+  # the region is taken from AWS in the dashboard. It's in the AWS URL specified for that project in AWS
+  region: "us-east-2"
+  # same name that's specified in AWS dashboard as the name you gave AWS for the application
+  app: "docker-react"
+  # environment name from AWS app dashboard. Found next to name user assigned to AWS project app instance
+  env: "DockerReact-env"
+  # Search AWS Services for S3 Scalable Storage in the cloud. Look for elasticbeanstalk.YOUR_LOCATION.
+  # click on it and copy over the name.
+  bucket_name: "elasticbeanstalk-us-east-2-108722263648"
+  # Look in bucket_name  file listing after clicking on the name at the top of the page. Find your
+  # project. If you DON'T HAVE a FOLDER, then just use same name as the app name. After your first
+  # deploy, a folder will be created.
+  bucket_path: "docker-react"
+
+  # ONLY deploy code when new code is merged to Master branch in Github, not when new code is added
+  # to feature branch
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    # NOTE: Travis docs say you don't need quotes but course teacher found they were necessary
+    secure: "$AWS_SECRET_KEY"
