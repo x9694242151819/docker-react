@@ -33,6 +33,8 @@ deploy:
   # to feature branch
   on:
     branch: master
+
+  # if Github is public, then need to use encrypted variables for access keys
   access_key_id: $AWS_ACCESS_KEY
   secret_access_key:
     # NOTE: Travis docs say you don't need quotes but course teacher found they were necessary
